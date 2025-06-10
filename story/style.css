@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "kleeone";
+  src: url("https://pipocorp-japan.github.io/asset/kleeone.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-family: "kleeone", sans-serif;
+}
+
+h2 {
+  text-align: center;
+}
