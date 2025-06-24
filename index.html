@@ -1,134 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ピポの世界 PDFビューア</title>
-<style>
-@font-face {
-  font-family: "kleeone";
-  src: url("https://pipocorp-japan.github.io/asset/kleeone.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ピポの世界</title>
+  <style>
+    @font-face {
+      font-family: "kleeone";
+      src: url("https://pipocorp-japan.github.io/asset/kleeone.ttf")
+        format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
 
-/* 全体のレイアウトとフォント */
-body {
-  font-family: "kleeone", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
+    body {
+      margin: 0;
+      font-family: "kleeone", sans-serif;
+    }
 
-/* ツールバー部分 */
-.toolbar {
-  background-color: #fff;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ccc;
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background-color: #f0f0f0;
+    }
 
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  overflow-x: auto;
-  white-space: nowrap;
-}
+    input[type="number"] {
+      font-size: 16px;
+      width: 60px;
+      padding: 4px 8px;
+    }
 
-/* タイトル */
-.toolbar h1 {
-  margin: 0;
-  font-size: 1.5em;
-  flex-shrink: 0;
-}
-
-/* inputのラベル */
-.toolbar label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-/* input */
-.toolbar input[type="number"] {
-  font-size: 16px;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 60px;
-}
-
-/* メインコンテンツ */
-.content {
-  padding: 20px;
-  background-color: white;
-  margin: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* iframeのスタイル */
-.content iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-family: "kleeone", sans-serif;
-}
-
-/* フッター部分 */
-.footer {
-  text-align: center;
-  padding: 15px;
-  background-color: #333;
-  color: white;
-  width: 100%;
-}
-
-.footer a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-</style>
+    iframe {
+      width: 100%;
+      height: calc(100vh - 60px);
+      border: none;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>ピポの世界</h1>
+    <label>第 <input id="volume" type="number" value="1" min="1" /> 巻</label>
+  </header>
 
-<header class="toolbar">
-  <h1>ピポの世界</h1>
-  <label for="volume-input">第
-    <input id="volume-input" type="number" min="1" value="1" />
-    巻
-  </label>
-</header>
+  <iframe
+    id="pdf-frame"
+    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://pipocorp-japan.github.io/pipoworld/story/1.pdf"
+  ></iframe>
 
-<main class="content">
-  <iframe id="pdf-viewer" src="https://pipocorp-japan.github.io/pipoworld/story/1.pdf"></iframe>
-</main>
+  <script>
+    const input = document.getElementById("volume");
+    const iframe = document.getElementById("pdf-frame");
 
-<footer class="footer">
-  <!-- 何か入れたいならここに -->
-</footer>
-
-<script>
-  const input = document.getElementById('volume-input');
-  const viewer = document.getElementById('pdf-viewer');
-
-  function updatePDF() {
-    const num = input.value || 1;
-    viewer.src = `https://pipocorp-japan.github.io/pipoworld/story/${num}.pdf`;
-  }
-
-  input.addEventListener('change', updatePDF);
-  input.addEventListener('input', updatePDF);
-</script>
-
+    input.addEventListener("input", () => {
+      const vol = input.value;
+      const url = `https://mozilla.github.io/pdf.js/web/viewer.html?file=https://pipocorp-japan.github.io/pipoworld/story/${vol}.pdf`;
+      iframe.src = url;
+    });
+  </script>
 </body>
 </html>
