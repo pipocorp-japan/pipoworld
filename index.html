@@ -1,29 +1,134 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Pipo World 日本語🇯🇵</title>
-    <link rel="stylesheet" href="/style.css" />
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <main>
-      <div class="toolbar">
-        <select id="viewnum">
-          <option value="1">第1巻</option>
-        </select>
-      </div>
-      <div class="content" role="main">
-        <iframe id="viewer" src="/story/1.html">
-          <p>
-            読み込み中...
-          </p>
-        </iframe>
-      </div>
-    </main>
-    <footer class="footer">
-      &copy;2025 <a href="https://pipocorp-japan.github.io/">pipo.corp</a>
-    </footer>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ピポの世界 PDFビューア</title>
+<style>
+@font-face {
+  font-family: "kleeone";
+  src: url("https://pipocorp-japan.github.io/asset/kleeone.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 全体のレイアウトとフォント */
+body {
+  font-family: "kleeone", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ツールバー部分 */
+.toolbar {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-bottom: 2px solid #ccc;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* タイトル */
+.toolbar h1 {
+  margin: 0;
+  font-size: 1.5em;
+  flex-shrink: 0;
+}
+
+/* inputのラベル */
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+/* input */
+.toolbar input[type="number"] {
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 60px;
+}
+
+/* メインコンテンツ */
+.content {
+  padding: 20px;
+  background-color: white;
+  margin: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* iframeのスタイル */
+.content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-family: "kleeone", sans-serif;
+}
+
+/* フッター部分 */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #333;
+  color: white;
+  width: 100%;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<header class="toolbar">
+  <h1>ピポの世界</h1>
+  <label for="volume-input">第
+    <input id="volume-input" type="number" min="1" value="1" />
+    巻
+  </label>
+</header>
+
+<main class="content">
+  <iframe id="pdf-viewer" src="/story/1.pdf"></iframe>
+</main>
+
+<footer class="footer">
+  <!-- 何か入れたいならここに -->
+</footer>
+
+<script>
+  const input = document.getElementById('volume-input');
+  const viewer = document.getElementById('pdf-viewer');
+
+  function updatePDF() {
+    const num = input.value || 1;
+    viewer.src = `/story/${num}.pdf`;
+  }
+
+  input.addEventListener('change', updatePDF);
+  input.addEventListener('input', updatePDF);
+</script>
+
+</body>
 </html>
